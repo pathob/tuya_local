@@ -1,0 +1,280 @@
+name: BLE Smart Lock Cylinder
+products:
+  - id: xqeob8h6
+    name: S1 TY BLE PRO
+primary_entity:
+  entity: lock
+  dps:
+    - id: 1
+      name: unlock_method_create
+      type: string
+      optional: true
+    - id: 2
+      name: unlock_method_delete
+      type: string
+      optional: true
+    - id: 3
+      name: unlock_method_modify
+      type: string
+      optional: true
+    - id: 12
+      name: unlock_fingerprint
+      type: integer
+      persist: false
+      optional: true
+    - id: 15
+      name: unlock_card
+      type: integer
+      persist: false
+      optional: true
+    - id: 16
+      name: unlock_key
+      type: integer
+      persist: false
+      optional: true
+    - id: 19
+      name: unlock_ble
+      type: integer
+      persist: false
+      optional: true
+    - id: 20
+      name: lock_record
+      type: string
+      optional: true
+    - id: 33
+      name: automatic_lock
+      type: boolean
+    - id: 47
+      name: lock
+      type: boolean
+      readonly: true
+      mapping:
+        - dps_val: true  # Unlocked
+          value: false
+        - dps_val: false  # Locked
+          value: true
+    - id: 54
+      name: synch_method
+      type: base64
+      optional: true
+    - id: 60
+      name: remote_no_pd_setkey
+      type: string
+      optional: true
+    - id: 61
+      name: remote_no_dp_key
+      type: string
+      optional: true
+    - id: 62
+      name: unlock_phone_remote
+      type: integer
+      persist: false
+      optional: true
+    - id: 63
+      name: unlock_voice_remote
+      type: integer
+      persist: false
+      optional: true
+    - id: 70
+      name: check_code_set
+      type: string
+      optional: true
+    - id: 71
+      name: ble_unlock_check
+      type: string
+      optional: true
+    - id: 73
+      name: remote_pd_setkey_check
+      type: string
+      optional: true
+secondary_entities:
+  - entity: sensor
+    class: battery
+    category: diagnostic
+    dps:
+      - id: 8
+        name: sensor
+        type: integer
+        unit: "%"
+        class: measurement
+  - entity: sensor
+    name: alarm
+    class: enum
+    category: diagnostic
+    dps:
+      - id: 21
+        name: alarm_lock
+        type: string
+        optional: true
+        persist: false
+        mapping:
+          - dps_val: null
+            value: ok
+          - dps_val: wrong_finger
+            value: Wrong Finger
+          - dps_val: wrong_password
+            value: Wrong Password
+          - dps_val: wrong_card
+            value: Wrong Card
+          - dps_val: wrong_face
+            value: Wrong Face
+          - dps_val: tongue_bad
+            value: Tongue Bad
+          - dps_val: too_hot
+            value: Too Hot
+          - dps_val: unclosed_time
+            value: unclosed Time
+          - dps_val: pry
+            value: Pry
+          - dps_val: key_in
+            value: Key In
+          - dps_val: low_battery
+            value: Low Battery
+          - dps_val: power_off
+            value: Power Off
+          - dps_val: shock
+            value: Shock
+          - dps_val: defense
+            value: Defense
+  - entity: binary_sensor
+    name: Hijack
+    class: safety
+    category: diagnostic
+    dps:
+      - id: 22
+        name: sensor
+        type: boolean
+        optional: true
+  - entity: switch
+    name: Auto lock
+    category: config
+    icon: "mdi:lock-reset"
+    dps:
+      - id: 33
+        name: switch
+        type: boolean
+  - entity: number
+    name: Auto lock delay
+    category: config
+    icon: "mdi:lock-clock"
+    dps:
+      - id: 36
+        name: value
+        type: integer
+        range:
+          min: 1
+          max: 1800
+        mapping:
+          - step: 1
+        unit: s
+
+        #     "24": {
+        #         "code": "doorbell",
+        #         "type": "Boolean",
+        #         "values": {}
+        #     },
+        #     "25": {
+        #         "code": "message",
+        #         "type": "Boolean",
+        #         "values": {}
+        #     },
+        #     "34": {
+        #         "code": "unlock_switch",
+        #         "type": "Enum",
+        #         "values": {
+        #             "range": [
+        #                 "single_unlock",
+        #                 "finger_card"
+        #             ]
+        #         }
+        #     },
+        #     "40": {
+        #         "code": "closed_opened",
+        #         "type": "Enum",
+        #         "values": {
+        #             "range": [
+        #                 "unknown",
+        #                 "open",
+        #                 "closed"
+        #             ]
+        #         }
+        #     },
+        #     "44": {
+        #         "code": "rtc_lock",
+        #         "type": "Boolean",
+        #         "values": {}
+        #     },
+        #     "46": {
+        #         "code": "manual_lock",
+        #         "type": "Boolean",
+        #         "values": {}
+        #     },
+        #     "69": {
+        #         "code": "record",
+        #         "type": "Raw",
+        #         "values": {}
+        #     },
+        #     "72": {
+        #         "code": "unlock_record_check",
+        #         "type": "Raw",
+        #         "values": {}
+        #     },
+        #     "73": {
+        #         "code": "remote_pd_setkey_check",
+        #         "type": "Raw",
+        #         "values": {}
+        #     },
+        #     "74": {
+        #         "code": "unlock_double_kit",
+        #         "type": "Raw",
+        #         "values": {}
+        #     },
+        #     "86": {
+        #         "code": "unlock_ble_ibeacon",
+        #         "type": "Integer",
+        #         "values": {
+        #             "min": 0,
+        #             "max": 999,
+        #             "scale": 0,
+        #             "step": 1
+        #         }
+        #     },
+        #     "87": {
+        #         "code": "ibeacon_scan_mode",
+        #         "type": "Enum",
+        #         "values": {
+        #             "range": [
+        #                 "always",
+        #                 "5min",
+        #                 "10min",
+        #                 "20min",
+        #                 "40min",
+        #                 "60min",
+        #                 "90min",
+        #                 "120min"
+        #             ]
+        #         }
+        #     },
+        #     "88": {
+        #         "code": "rssi_sensitivity_level",
+        #         "type": "Enum",
+        #         "values": {
+        #             "range": [
+        #                 "inactive",
+        #                 "90db",
+        #                 "80db",
+        #                 "70db",
+        #                 "60db",
+        #                 "50db",
+        #                 "40db",
+        #                 "30db",
+        #                 "20db"
+        #             ]
+        #         }
+        #     },
+        #     "90": {
+        #         "code": "ibeacon_switch",
+        #         "type": "Boolean",
+        #         "values": {}
+        #     }
+        # },
