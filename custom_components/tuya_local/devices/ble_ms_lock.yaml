@@ -1,0 +1,92 @@
+name: BLE Smart Lock Cylinder
+products:
+  - id: 1nmdfdzp
+    name: CYZ S1
+primary_entity:
+  entity: lock
+  dps:
+    - id: 1
+      name: unlock_method_create
+      type: string
+      optional: true
+    - id: 2
+      name: unlock_method_delete
+      type: string
+      optional: true
+    - id: 3
+      name: unlock_method_modify
+      type: string
+      optional: true
+    - id: 12
+      name: unlock_fingerprint
+      type: integer
+      persist: false
+      optional: true
+    - id: 15
+      name: unlock_card
+      type: integer
+      persist: false
+      optional: true
+    - id: 19
+      name: unlock_ble
+      type: integer
+      persist: false
+      optional: true
+    - id: 33
+      name: automatic_lock
+      type: boolean
+    - id: 47
+      name: lock
+      type: boolean
+      readonly: true
+      mapping:
+        - dps_val: true  # Unlocked
+          value: false
+        - dps_val: false  # Locked
+          value: true
+    - id: 54
+      name: synch_method
+      type: base64
+      optional: true
+    - id: 60
+      name: remote_no_pd_setkey
+      type: string
+      optional: true
+    - id: 61
+      name: remote_no_dp_key
+      type: string
+      optional: true
+    - id: 62
+      name: unlock_phone_remote
+      type: integer
+      persist: false
+      optional: true
+secondary_entities:
+  - entity: sensor
+    class: battery
+    category: diagnostic
+    dps:
+      - id: 8
+        name: sensor
+        type: integer
+        unit: "%"
+        class: measurement
+  - entity: sensor
+    name: alarm
+    class: enum
+    category: diagnostic
+    dps:
+      - id: 21
+        name: alarm_lock
+        type: string
+        optional: true
+        persist: false
+        mapping:
+          - dps_val: null
+            value: ok
+          - dps_val: wrong_finger
+            value: Wrong Finger
+          - dps_val: wrong_card
+            value: Wrong Card
+          - dps_val: low_battery
+            value: Low Battery
